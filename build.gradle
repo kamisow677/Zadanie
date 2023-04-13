@@ -6,6 +6,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.8.20'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.8.20'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.8.20'
+    id 'groovy'
 }
 
 group = 'com.vattenfall'
@@ -21,6 +22,24 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'org.postgresql:postgresql'
+
+    implementation platform('org.apache.groovy:groovy-bom:4.0.6')
+    implementation 'org.apache.groovy:groovy'
+
+    testImplementation platform("org.spockframework:spock-bom:2.4-M1-groovy-4.0")
+    testImplementation "org.spockframework:spock-core"
+    testImplementation "org.spockframework:spock-spring"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:junit-jupiter'
+
+    testImplementation platform('org.testcontainers:testcontainers-bom:1.18.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.testcontainers:testcontainers:1.18.0'
+    testImplementation 'org.testcontainers:postgresql:1.18.0'
+
+    testImplementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
+
 }
 
 tasks.withType(KotlinCompile) {
@@ -28,4 +47,11 @@ tasks.withType(KotlinCompile) {
         freeCompilerArgs = ['-Xjsr305=strict']
         jvmTarget = '17'
     }
+}
+
+
+
+
+test {
+    useJUnitPlatform()
 }
